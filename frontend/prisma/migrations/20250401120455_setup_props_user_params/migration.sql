@@ -1,0 +1,19 @@
+-- AlterTable
+ALTER TABLE "Admin" ALTER COLUMN "nom" DROP NOT NULL,
+ALTER COLUMN "telephone" DROP NOT NULL,
+ALTER COLUMN "adresse" DROP NOT NULL;
+
+-- AlterTable
+ALTER TABLE "Eleve" ADD COLUMN     "adresse" TEXT,
+ADD COLUMN     "telephone" TEXT,
+ALTER COLUMN "nom" DROP NOT NULL;
+
+-- AlterTable
+ALTER TABLE "Enseignant" ALTER COLUMN "nom" DROP NOT NULL,
+ALTER COLUMN "telephone" DROP NOT NULL,
+ALTER COLUMN "adresse" DROP NOT NULL;
+
+-- AlterTable
+ALTER TABLE "Parent" ALTER COLUMN "nom" DROP NOT NULL,
+ALTER COLUMN "telephone" DROP NOT NULL,
+ALTER COLUMN "adresse" DROP NOT NULL;

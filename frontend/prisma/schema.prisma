@@ -1,0 +1,180 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(uuid())
+  username  String
+  email     String    @unique
+  password  String
+  telephone String
+  role      Role?      @default(USER)
+  createdAt DateTime  @default(now())
+  ecoleId     String?
+  ecole       Ecole?    @relation(fields: [ecoleId], references: [id])
+  parent     Parent?
+  eleve      Eleve?
+  enseignant Enseignant?
+  Admin Admin?
+
+  Session Session[]
+}
+
+enum Role {
+  USER
+  PARENT
+  ELEVE
+  ENSEIGNANT
+  ADMIN
+}
+
+model Ecole {
+  id                String   @id @default(uuid())
+  nom               String   // Nom de l'école
+  type              String   // Public ou Privé
+  numeroEnregistrement String // Numéro d'enregistrement ou d'accréditation
+  adresse           String   // Adresse physique
+  telephone         String   // Numéro de téléphone
+  email             String   // Adresse email
+  siteWeb           String?  // Site web
+  dateCreation      DateTime @default(now()) // Date de création
+  responsable       String   // Responsable de l'école
+  numeroLicence     String?  // Numéro d'accréditation ou de licence
+  region            String   // Région ou district
+  codeEcole         String?  // Code unique de l'école
+  statut            String   // Statut juridique (Public/Privé/Autre)
+  certifications    String[] // Certifications spécifiques (ex : accréditations gouvernementales)
+  infrastructure    String   // Information sur l'infrastructure (salles de classe, équipements)
+  accesTechnologie  Boolean  // Si l'école dispose de technologies comme Wi-Fi, ordinateurs, etc.
+  
+  enseignants       Enseignant[] // Liste des enseignants de l'école
+  classes           Classe[]     // Liste des classes proposées
+  eleves            Eleve[]      // Liste des élèves inscrits
+  paiements         Paiement[]   // Paiements des parents
+
+  User User[]
+}
+
+model Session {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  token       String   @unique
+  createdAt   DateTime @default(now())
+  expiresAt   DateTime
+}
+
+model Admin {
+  id        String   @id @default(uuid())
+  nom       String?
+  telephone String?
+  adresse   String?
+  user      User? @relation(fields: [userId], references: [id])
+  userId    String? @unique
+}
+
+model Parent {
+  id        String   @id @default(uuid())
+  nom       String?
+  telephone String?
+  adresse   String?
+  user      User? @relation(fields: [userId], references: [id])
+  userId    String? @unique
+  enfants   Eleve[]  @relation("ParentEnfant")
+  paiements Paiement[]
+}
+
+
+
+model Eleve {
+  id        String   @id @default(uuid())
+  nom       String?
+  telephone String?
+  adresse   String?
+  classeId  String
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id])
+  notes     Note[]
+  devoirs   Devoir[]
+  presences Presence[]
+  matricule String @unique
+  parents   Parent[] @relation("ParentEnfant")
+  classe    Classe?   @relation(fields: [classeId], references: [id])
+
+  Ecole Ecole[]
+}
+
+model Enseignant {
+  id      String  @id @default(uuid())
+  nom     String?
+  matiere String
+  matricule String @unique
+  telephone String?
+  adresse   String?
+  userId  String  @unique
+  user    User    @relation(fields: [userId], references: [id])
+  classes Classe[]
+  ecoleId     String
+  ecole       Ecole    @relation(fields: [ecoleId], references: [id])
+}
+
+model Classe {
+  id          String      @id @default(uuid())
+  nom         String
+  eleves      Eleve[]
+  enseignants Enseignant[]
+  devoirs     Devoir[]
+  ecoleId     String
+  ecole       Ecole    @relation(fields: [ecoleId], references: [id])
+}
+
+model Note {
+  id        String   @id @default(uuid())
+  matiere   String
+  valeur    Float
+  eleveId   String
+  eleve     Eleve    @relation(fields: [eleveId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+model Devoir {
+  id        String  @id @default(uuid())
+  titre     String
+  contenu   String
+  dateLimite DateTime
+  classeId  String
+  classe    Classe  @relation(fields: [classeId], references: [id])
+  eleves    Eleve[]
+}
+
+model Message {
+  id         String   @id @default(uuid())
+  contenu    String
+  senderId   String
+  receiverId String
+  createdAt  DateTime @default(now())
+}
+
+model Presence {
+  id       String   @id @default(uuid())
+  eleveId  String
+  eleve    Eleve    @relation(fields: [eleveId], references: [id])
+  date     DateTime
+  present  Boolean
+}
+
+model Paiement {
+  id        String   @id @default(uuid())
+  parentId  String
+  parent    Parent   @relation(fields: [parentId], references: [id])
+  montant   Float
+  status    String
+  createdAt DateTime @default(now())
+
+  Ecole Ecole[]
+}
