@@ -26,7 +26,7 @@ export default function AdminDashboard() {
         </main>
         <div className="flex flex-col items-center w-full gap-4 mt-8">
           <p className="dark:text-white">{user?.id}</p>
-          <p className="dark:text-white">{user?.telephone}</p>
+          <p className="dark:text-white">{user?.phone}</p>
           <p className="dark:text-white">{user?.role}</p>
           <p className="dark:text-white text-sm hidden">{token}</p>
         </div>
@@ -77,7 +77,6 @@ export function TotalOwerviews(){
                 <h1 className="text-4xl text-center">100</h1>
             </CardContent>
         </Card>
-
         </section>
 
     )

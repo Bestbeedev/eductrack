@@ -1,15 +1,15 @@
-import { Role } from "@prisma/client";
+import { Role } from "@/types";
 
 export async function signUpUser(data: { 
-  username: string, 
+  name: string, 
   email: string, 
-  telephone: string, 
+  phone: string, 
   password: string, 
   role: Role 
 }) {
   try {
     console.log("Sending signup request to API with data:", data)
-    const response = await fetch("/api/auth/signup", {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -26,10 +26,11 @@ export async function signUpUser(data: {
   }
 }
 
+
 export async function loginUser(data: { email: string, password: string }) {
   try {
     console.log("Sending login request to API with data:", data)
-    const response = await fetch("/api/auth/login", {
+    const response = await fetch( `${process.env.NEXT_PUBLIC_API_URL}/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

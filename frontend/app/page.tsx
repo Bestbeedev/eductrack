@@ -325,21 +325,21 @@ export default function HeroSection() {
         <DialogContent className="dark:bg-neutral-800 border dark:border-neutral-700 dark:text-white p-8 rounded-xl max-w-md mx-auto max-h-[80vh] overflow-y-auto">
           <DialogHeader className="px-5">
             <DialogTitle className="text-2xl font-semibold mb-4">
-              {selectedRole === "ADMIN" && "Créer une école"}
-              {selectedRole === "PARENT" && "Connexion Parent"}
-              {selectedRole === "ELEVE" && "Connexion Élève"}
-              {selectedRole === "ENSEIGNANT" && "Connexion Enseignant"}
+              {selectedRole === "admin" && "Créer une école"}
+              {selectedRole === "parent" && "Connexion Parent"}
+              {selectedRole === "eleve" && "Connexion Élève"}
+              {selectedRole === "enseignant" && "Connexion Enseignant"}
             </DialogTitle>
             <DialogDescription className="-mt-3 dark:text-neutral-300">
-              {selectedRole === "ADMIN"
+              {selectedRole === "admin"
                 ? "Remplissez les informations pour créer votre école."
                 : "Veuillez entrer vos identifiants pour vous connecter."}
             </DialogDescription>
           </DialogHeader>
-          {selectedRole === "ADMIN" && <SchoolForm />}
-          {selectedRole === "PARENT" && <ParentForm />}
-          {selectedRole === "ELEVE" && <StudentForm />}
-          {selectedRole === "ENSEIGNANT" && <TeacherForm />}
+          {selectedRole === "admin" && <SchoolForm />}
+          {selectedRole === "parent" && <ParentForm />}
+          {selectedRole === "eleve" && <StudentForm />}
+          {selectedRole === "enseignant" && <TeacherForm />}
         </DialogContent>
       </Dialog>
 
@@ -455,7 +455,6 @@ export function FooterSection(){
         </footer>
     )
 }
-
 
 
 export  function Pricing(){

@@ -4,9 +4,9 @@ import { persist } from "zustand/middleware";
 type User = {
   id: string;
   email: string;
-  username: string;
+  name: string;
   role: string;
-  telephone: string;
+  phone: string;
   adresse?: string;
   matiere?: string;
   matricule?:string;
@@ -31,7 +31,7 @@ export const useAuthStore = create<AuthState>()(
       setUser: (user, token) => set({ user, token }),
       setIsLoading: (loading) => set({ isLoading: loading }),
       logout: () => {
-        fetch("/api/auth/logout", { method: "POST" });
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/logout`, { method: "POST" });
         set({ user: null, token: null });
       }   
     }),

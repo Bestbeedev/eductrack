@@ -16,7 +16,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card"
 import { loginSchema } from "@/lib/validation"
-import { loginUser } from "@/lib/actions"
+import { loginUser } from "@/app/_actions/api/auth"
 import { toast } from 'sonner'
 import { useAuthStore } from "@/stores/auth"
 
@@ -46,8 +46,8 @@ export function LoginForm({ onSuccess,onToggleSignup }: LoginFormProps) {
         toast.success("Connexion réussie!");
           onSuccess(response.user.role);
       } else {
-        toast.error(response.error);
-        console.log(response.error)
+        toast.error(response.errors);
+        console.log(response.errors)
       }
     } catch (error) {
       toast.error("Erreur serveur. Veuillez réessayer.");

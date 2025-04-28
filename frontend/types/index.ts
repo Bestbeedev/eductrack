@@ -1,1 +1,1 @@
-export type Role = "USER" | "ADMIN" | "ENSEIGNANT" | "PARENT" | "ELEVE" 
+export type Role = "etudiant" | "enseignant" | "admin" | "parent"
