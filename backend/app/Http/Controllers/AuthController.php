@@ -43,7 +43,7 @@ class AuthController extends Controller
             $user->notify(new TeacherRegistrationPending());
 
             return response()->json([
-                'message' => 'Votre inscription en tant qu\'enseignant est en attente de validation. Un email vous a été envoyé avec les prochaines étapes.',
+                'message' => 'Votre inscription en tant qu\'enseignant est en attente de validation. Un email vous a été envoyé vous avec les prochaines étapes.',
             ]);
         }
 
